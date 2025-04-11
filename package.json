@@ -2,10 +2,11 @@
   "name": "kanban",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/electron.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "concurrently \"cross-env NODE_ENV=development BROWSER=none next dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "next build && electron-builder",
+    "build:win": "next build && electron-builder --win --x64",
     "lint": "next lint"
   },
   "dependencies": {
