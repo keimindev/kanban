@@ -1,20 +1,56 @@
 import React from "react";
+import { useDraggable } from "@dnd-kit/core";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { IoFlagOutline } from "react-icons/io5";
 
-const Kanban = () => {
+type KanbanItem = {
+  id: string;
+  title: string;
+  description: string;
+  notification: boolean;
+  time: string;
+  deadline: string;
+  priority: string;
+};
+
+type KanbanProps = KanbanItem & { dragId: string };
+
+const Kanban = ({
+  id,
+  title,
+  description,
+  time,
+  notification,
+  priority,
+  deadline,
+  dragId,
+}: KanbanProps) => {
+
   return (
-    <div className="border border-gray-100 rounded-lg p-3 m-2 shadow-md">
+    <div
+      key={id}
+      className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white"
+    >
       <div className="flex">
-        <div className="pt-1.5"><IoFlagOutline color="red"/></div>
-        <div className="text-xl ml-2">this is title ...</div>
-        <div className="pt-1.5 mx-1">
-          <IoNotificationsOutline />
-        </div>
-        <div className="mt-0.5">03:00 pm</div>
+        {priority && (
+          <div className="pt-1.5">
+            <IoFlagOutline color="red" />
+          </div>
+        )}
+        <div className="text-lg ml-2">{title}</div>
+        {deadline && (
+          <>
+            <div className="pt-1.5 mx-1">
+              <IoNotificationsOutline />
+            </div>
+            <div className="mt-0.5">{time}</div>
+          </>
+        )}
       </div>
-      <div>thislkdflk sjdifke,skjdlkfj slkjdlkfjalk dlkjf lajdljasl ldjfjdj</div>
-      <div className="text-gray-500">Notification 03:00</div>
+      <div>{description}</div>
+      {notification && (
+        <div className="text-gray-500 mt-2 text-sm">Notification {time}</div>
+      )}
     </div>
   );
 };

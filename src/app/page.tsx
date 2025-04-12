@@ -4,20 +4,49 @@ import Kanban from "./components/kanban";
 import { FaPlus } from "react-icons/fa";
 import Newkanban from "./components/newkanban";
 import { useModalStore } from "./store/modalStore";
+import { useEffect, useState } from "react";
+import { dummydata } from "./utils/data";
+import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
+
+type KanbanItem = {
+  id: string;
+  title: string;
+  description: string;
+  notification: boolean;
+  time: string;
+  deadline: string;
+  priority: string;
+};
 
 export default function Home() {
   const { isOpen, open } = useModalStore();
+  const [tasks, setTasks] = useState<KanbanItem[]>(dummydata);
+
+  useEffect(() => {
+    setTasks(dummydata);
+  }, []);
+
+  function handleDragEnd() {
+
+  }
+
 
   return (
     <>
       <div className="text-center">Kanban</div>
       <div className="relative h-screen">
-        {isOpen && <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/40"> <Newkanban /></div>}
-        <div className="p-2">
-          <Kanban />
-          <Kanban />
-          <Kanban />
-        </div>
+        {isOpen && (
+          <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/40">
+            <Newkanban />
+          </div>
+        )}
+        <DndContext onDragEnd={handleDragEnd}>
+          <div className="p-2">
+            {tasks?.map((task) => {
+              return <Kanban key={task.id} {...task} dragId={task.id.toString()} />;
+            })}
+          </div>
+        </DndContext>
         <div
           className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-sky-800 text-white cursor-pointer flex justify-center items-center shadow-xl/20"
           onClick={open}
