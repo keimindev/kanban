@@ -64,7 +64,7 @@ export default function Home() {
           </div>
         </DndContext>
         <div
-          className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-sky-800 text-white cursor-pointer flex justify-center items-center shadow-xl/20"
+          className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-indigo-800 text-white cursor-pointer flex justify-center items-center shadow-xl/20"
           onClick={open}
         >
           <FaPlus size={24} />

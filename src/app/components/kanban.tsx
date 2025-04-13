@@ -47,7 +47,7 @@ const Kanban = ({
       <div className="flex">
         {priority && (
           <div className="pt-1.5">
-            <IoFlagOutline color="red" />
+            <IoFlagOutline color={priority == "top" ? "red" : "green"} />
           </div>
         )}
         <div className="text-lg ml-2">{title}</div>
