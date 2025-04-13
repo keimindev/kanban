@@ -1,6 +1,7 @@
 export const dummydata = [
   {
     id: "1",
+    index: "0",
     title: "Setting hotel rooming list",
     description: "create excel file",
     notification: false,
@@ -10,11 +11,22 @@ export const dummydata = [
   },
   {
     id: "2",
+    index: "1",
     title: "Marketing meeting",
     description: "weekly sales",
     notification: true,
-    time: "02:00 pm",
+    time: "10:00",
     priority: "top",
+    deadline: "",
+  },
+  {
+    id: "3",
+    index: "1",
+    title: "Cooking for dinner",
+    description: "",
+    notification: true,
+    time: "17:00",
+    priority: "default",
     deadline: "",
   },
 ];

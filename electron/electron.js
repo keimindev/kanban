@@ -7,8 +7,13 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 800,
+    height: 700,
+    minWidth : 480,
+    minHeight: 500,
+    maxHeight: 950,
+    resizable: true,      // 🔒 창 크기 조절 비활성화
+    maximizable: false,    // 🔒 최대화 버튼 비활성화
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -25,7 +30,7 @@ function createWindow() {
 
   if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
 
-  mainWindow.setResizable(true);
+  // mainWindow.setResizable(true);
   mainWindow.on("closed", () => {
     mainWindow = null;
     app.quit();

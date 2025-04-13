@@ -9,14 +9,14 @@ import { dummydata } from "./utils/data";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
-type KanbanItem = {
+export type KanbanItem = {
   id: string;
   title: string;
   description: string;
-  notification: boolean;
-  time: string;
-  deadline: string;
-  priority: string;
+  notification?: boolean;
+  time?: string;
+  deadline?: string;
+  priority?: string;
 };
 
 export default function Home() {

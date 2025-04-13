@@ -1,17 +1,9 @@
-import React from "react";
+"use client";
+
 import { IoNotificationsOutline } from "react-icons/io5";
 import { IoFlagOutline } from "react-icons/io5";
 import { useSortable } from "@dnd-kit/sortable";
-
-type KanbanItem = {
-  id: string;
-  title: string;
-  description: string;
-  notification: boolean;
-  time: string;
-  deadline: string;
-  priority: string;
-};
+import { KanbanItem } from "../page";
 
 type KanbanProps = KanbanItem & { dragId: string };
 
@@ -45,13 +37,13 @@ const Kanban = ({
       className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white"
     >
       <div className="flex">
-        {priority && (
-          <div className="pt-1.5">
+        {priority != "default" ? (
+          <div className="pt-1.5 mr-2">
             <IoFlagOutline color={priority == "top" ? "red" : "green"} />
           </div>
-        )}
-        <div className="text-lg ml-2">{title}</div>
-        {deadline && (
+        ) : <></>}
+        <div className="text-lg">{title}</div>
+        {notification && (
           <>
             <div className="pt-1.5 mx-1">
               <IoNotificationsOutline />
@@ -61,7 +53,7 @@ const Kanban = ({
         )}
       </div>
       <div>{description}</div>
-      {notification && (
+      {deadline && (
         <div className="text-gray-500 mt-2 text-sm">Notification {time}</div>
       )}
     </div>
