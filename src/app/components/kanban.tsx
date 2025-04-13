@@ -1,7 +1,7 @@
 import React from "react";
-import { useDraggable } from "@dnd-kit/core";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { IoFlagOutline } from "react-icons/io5";
+import { useSortable } from "@dnd-kit/sortable";
 
 type KanbanItem = {
   id: string;
@@ -25,10 +25,23 @@ const Kanban = ({
   deadline,
   dragId,
 }: KanbanProps) => {
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
+    id: dragId.toString(),
+  });
+
+  const style = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : undefined,
+  };
 
   return (
     <div
       key={id}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
       className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white"
     >
       <div className="flex">

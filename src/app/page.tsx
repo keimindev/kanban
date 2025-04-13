@@ -6,7 +6,8 @@ import Newkanban from "./components/newkanban";
 import { useModalStore } from "./store/modalStore";
 import { useEffect, useState } from "react";
 import { dummydata } from "./utils/data";
-import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
 type KanbanItem = {
   id: string;
@@ -26,10 +27,21 @@ export default function Home() {
     setTasks(dummydata);
   }, []);
 
-  function handleDragEnd() {
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
 
+    const oldIndex = tasks.findIndex(
+      (t) => t.id.toString() === active.id.toString()
+    );
+    const newIndex = tasks.findIndex(
+      (t) => t.id.toString() === over.id.toString()
+    );
+
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    setTasks((tasks) => arrayMove(tasks, oldIndex, newIndex));
   }
-
 
   return (
     <>
@@ -42,9 +54,13 @@ export default function Home() {
         )}
         <DndContext onDragEnd={handleDragEnd}>
           <div className="p-2">
-            {tasks?.map((task) => {
-              return <Kanban key={task.id} {...task} dragId={task.id.toString()} />;
-            })}
+            <SortableContext items={tasks}>
+              {tasks?.map((task) => {
+                return (
+                  <Kanban key={task.id} {...task} dragId={task.id.toString()} />
+                );
+              })}
+            </SortableContext>
           </div>
         </DndContext>
         <div
