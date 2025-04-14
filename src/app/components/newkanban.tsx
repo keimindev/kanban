@@ -1,12 +1,13 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useModalStore } from "../store/modalStore";
 import { IoCloseCircle, IoNotificationsOutline } from "react-icons/io5";
 import { KanbanItem } from "../page";
+import { dummydata } from "../utils/data";
 
 function Newkanban() {
-  const { close } = useModalStore();
+  const { close, selectedId } = useModalStore();
 
   const [newTask, setNewTask] = useState<KanbanItem>({
     id: "1",
@@ -17,8 +18,17 @@ function Newkanban() {
     deadline: "",
     priority: "default",
   });
+  
+  const task = dummydata.find((item) => item.id === selectedId);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() =>{
+    if(task){
+      setNewTask(task)
+    }
+
+  },[task])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTask((prev) => ({

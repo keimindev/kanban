@@ -20,7 +20,7 @@ export type KanbanItem = {
 };
 
 export default function Home() {
-  const { isOpen, open } = useModalStore();
+  const { isOpen, openNew } = useModalStore();
   const [tasks, setTasks] = useState<KanbanItem[]>(dummydata);
 
   useEffect(() => {
@@ -64,8 +64,8 @@ export default function Home() {
           </div>
         </DndContext>
         <div
-          className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-indigo-800 text-white cursor-pointer flex justify-center items-center shadow-xl/20"
-          onClick={open}
+          className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-indigo-600 text-white cursor-pointer flex justify-center items-center shadow-xl/20"
+          onClick={openNew}
         >
           <FaPlus size={24} />
         </div>
