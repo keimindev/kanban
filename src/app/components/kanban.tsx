@@ -7,7 +7,7 @@ import { useModalStore } from "../store/modalStore";
 
 type KanbanProps = KanbanItem & { dragId: string };
 
-export const dynamic = 'auto'
+
 
 const Kanban = ({
   id,

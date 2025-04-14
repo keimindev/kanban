@@ -1,13 +1,15 @@
-"use client";
+'use client';
 
-import Kanban from "./components/kanban";
-import { FaPlus } from "react-icons/fa";
 import Newkanban from "./components/newkanban";
+import Kanban from "./components/kanban";
 import { useModalStore } from "./store/modalStore";
 import { useEffect, useState } from "react";
 import { dummydata } from "./utils/data";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import { FaPlus } from "react-icons/fa";
+
+
 
 export type KanbanItem = {
   id: string;

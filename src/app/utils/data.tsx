@@ -15,7 +15,7 @@ export const dummydata = [
     title: "Marketing meeting",
     description: "weekly sales",
     notification: true,
-    time: "10:00",
+    time: "21:52",
     priority: "top",
     deadline: "",
   },
