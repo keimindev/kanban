@@ -1,14 +1,15 @@
 'use client';
 
 import Newkanban from "./components/newkanban";
-import Kanban from "./components/kanban";
 import { useModalStore } from "./store/modalStore";
 import { useEffect, useState } from "react";
 import { dummydata } from "./utils/data";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { FaPlus } from "react-icons/fa";
-
+import dynamic from 'next/dynamic'
+ 
+const Kanban = dynamic(() => import('./components/kanban'), { ssr: false })
 
 
 export type KanbanItem = {
