@@ -1,4 +1,4 @@
-const { app, BrowserWindow} = await import("electron");
+const { app, BrowserWindow, Notification} = await import("electron");
 const isDev = await import("electron-is-dev");
 
 
@@ -29,6 +29,11 @@ function createWindow() {
   );
 
 
+  new Notification({
+    title: 'notification title',
+    body: 'hello'
+  }).show()
+  
   if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
 
   mainWindow.on("closed", () => {
@@ -50,3 +55,4 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
+
