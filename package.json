@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "electron/electron.js",
+  "type": "module", 
   "scripts": {
     "dev": "concurrently \"cross-env NODE_ENV=development BROWSER=none next dev\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "next build && electron-builder",

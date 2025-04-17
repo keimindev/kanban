@@ -16,7 +16,7 @@ export type KanbanItem = {
   id: string;
   title: string;
   description: string;
-  notification?: boolean;
+  notifications?: boolean;
   time?: string;
   deadline?: string;
   priority?: string;

@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = await import("electron");
+const { app, BrowserWindow} = await import("electron");
 const isDev = await import("electron-is-dev");
+
 
 let mainWindow;
 
@@ -13,10 +14,11 @@ function createWindow() {
     resizable: true, // 🔒 창 크기 조절 비활성화
     maximizable: false, // 🔒 최대화 버튼 비활성화
     webPreferences: {
-      nodeIntegration: false, // 노드 통합 비활성화
-      contextIsolation: true, // 컨텍스트 분리
+      contextIsolation: true,
+      nodeIntegration: false,
       sandbox: true, // 샌드박스화
       contextBridge: true, // contextBridge 활성화
+      enableRemoteModule: true,
     },
   });
 
@@ -26,9 +28,9 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
+
   if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
 
-  // mainWindow.setResizable(true);
   mainWindow.on("closed", () => {
     mainWindow = null;
     app.quit();
@@ -36,12 +38,15 @@ function createWindow() {
   mainWindow.focus();
 }
 
-app.on("ready", createWindow);
 
-app.on("activate", () => {
-  if (mainWindow === null) createWindow();
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
 });
