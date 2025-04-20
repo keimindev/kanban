@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export interface TimeEntry {
-  id: string;
+  id: number;
   title: string;
   time: string;
   notified: boolean;
@@ -10,7 +10,7 @@ export interface TimeEntry {
 interface TimeStore {
   entries: TimeEntry[];
   addEntry: (entry: TimeEntry) => void;
-  markNotified: (id: string) => void;
+  markNotified: (id: number) => void;
 }
 
 export const useTimeStore = create<TimeStore>((set) => ({

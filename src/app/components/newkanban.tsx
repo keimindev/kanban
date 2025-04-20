@@ -4,13 +4,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useModalStore } from "../store/modalStore";
 import { IoCloseCircle, IoNotificationsOutline } from "react-icons/io5";
 import { KanbanItem } from "../page";
-import { dummydata } from "../utils/data";
+import { useTaskStore } from "../store/taskStore";
 
 function Newkanban() {
   const { close, selectedId } = useModalStore();
+  const { taskList, addTask} = useTaskStore();
 
   const [newTask, setNewTask] = useState<KanbanItem>({
-    id: "1",
+    id: 1,
     title: "",
     description: "",
     notification: false,
@@ -19,7 +20,7 @@ function Newkanban() {
     priority: "default",
   });
   
-  const task = dummydata.find((item) => item.id === selectedId);
+  const task = taskList.find((item) => item.id == selectedId);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -45,7 +46,7 @@ function Newkanban() {
   };
 
   const handleSaveNewTask = () => {
-    console.log(newTask);
+    addTask({ ...newTask, id: taskList.length + 1});
   };
 
   return (

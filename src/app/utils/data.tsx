@@ -1,6 +1,6 @@
 export const dummydata = [
   {
-    id: "1",
+    id: 1,
     index: "0",
     title: "Setting hotel rooming list",
     description: "create excel file",
@@ -10,7 +10,7 @@ export const dummydata = [
     deadline: "",
   },
   {
-    id: "2",
+    id: 2,
     index: "1",
     title: "Marketing meeting",
     description: "weekly sales",
@@ -20,7 +20,7 @@ export const dummydata = [
     deadline: "",
   },
   {
-    id: "3",
+    id: 3,
     index: "1",
     title: "Cooking for dinner",
     description: "",

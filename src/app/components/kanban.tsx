@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useModalStore } from "../store/modalStore";
 import { useTimeStore } from "../store/timeStore";
 
-type KanbanProps = KanbanItem & { dragId: string };
+type KanbanProps = KanbanItem & { dragId: number };
 
 const Kanban = ({
   id,
@@ -20,7 +20,7 @@ const Kanban = ({
   dragId,
 }: KanbanProps) => {
   const { attributes, listeners, setNodeRef, transform } = useSortable({
-    id: dragId.toString(),
+    id: dragId,
   });
   const { open } = useModalStore();
 

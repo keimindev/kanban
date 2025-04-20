@@ -1,10 +1,9 @@
-// modalStore.ts
 import { create } from 'zustand';
 
 interface ModalState {
   isOpen: boolean;
-  selectedId : string | null;
-  open: (id?: string) => void;
+  selectedId : number | null;
+  open: (id?: number) => void;
   openNew: () => void;
   close: () => void;
 }

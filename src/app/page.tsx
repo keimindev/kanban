@@ -2,19 +2,18 @@
 
 import Newkanban from "./components/newkanban";
 import { useModalStore } from "./store/modalStore";
-import { useEffect, useState } from "react";
-import { dummydata } from "./utils/data";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { FaPlus } from "react-icons/fa";
 import dynamic from 'next/dynamic'
 import TimeNotifier from "./components/timeNotification";
+import { useTaskStore } from "./store/taskStore";
  
 const Kanban = dynamic(() => import('./components/kanban'), { ssr: false })
 
 
 export type KanbanItem = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   notification?: boolean;
@@ -25,26 +24,24 @@ export type KanbanItem = {
 
 export default function Home() {
   const { isOpen, openNew } = useModalStore();
-  const [tasks, setTasks] = useState<KanbanItem[]>(dummydata);
 
-  useEffect(() => {
-    setTasks(dummydata);
-  }, []);
+  const { taskList, changeIdxTask } = useTaskStore();
+
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = tasks.findIndex(
+    const oldIndex = taskList.findIndex(
       (t) => t.id.toString() === active.id.toString()
     );
-    const newIndex = tasks.findIndex(
+    const newIndex = taskList.findIndex(
       (t) => t.id.toString() === over.id.toString()
     );
 
     if (oldIndex === -1 || newIndex === -1) return;
 
-    setTasks((tasks) => arrayMove(tasks, oldIndex, newIndex));
+    changeIdxTask(arrayMove(taskList,oldIndex, newIndex ))
   }
 
   return (
@@ -58,10 +55,10 @@ export default function Home() {
         )}
         <DndContext onDragEnd={handleDragEnd}>
           <div className="p-2">
-            <SortableContext items={tasks}>
-              {tasks?.map((task) => {
+            <SortableContext items={taskList}>
+              {taskList?.map((task) => {
                 return (
-                  <Kanban key={task.id} {...task} dragId={task.id.toString()} />
+                  <Kanban key={task.id} {...task} dragId={task.id} />
                 );
               })}
             </SortableContext>
