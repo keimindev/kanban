@@ -3,16 +3,18 @@
 import { IoFlagSharp, IoNotificationsOutline } from "react-icons/io5";
 import { useSortable } from "@dnd-kit/sortable";
 import { KanbanItem } from "../page";
+import { useEffect } from "react";
+import { useModalStore } from "../store/modalStore";
+import { useTimeStore } from "../store/timeStore";
 
 type KanbanProps = KanbanItem & { dragId: string };
-
 
 const Kanban = ({
   id,
   title,
   description,
   time,
-  notifications,
+  notification,
   priority,
   deadline,
   dragId,
@@ -20,7 +22,7 @@ const Kanban = ({
   const { attributes, listeners, setNodeRef, transform } = useSortable({
     id: dragId.toString(),
   });
-  // const { open } = useModalStore();
+  const { open } = useModalStore();
 
   const style = {
     transform: transform
@@ -28,13 +30,12 @@ const Kanban = ({
       : undefined,
   };
 
-  const handleClick = () =>{
-    Notification.requestPermission().then( () => {
-
-      new Notification("title", { body: "its test"})
-    })
-  }
-
+  useEffect(() => {
+    if (notification && time) {
+      useTimeStore.getState().addEntry({ id, title, time, notified: false });
+    }
+  }, []);
+  
   return (
     <>
       <div
@@ -45,9 +46,7 @@ const Kanban = ({
         {...attributes}
         style={style}
         className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white"
-        // onDoubleClick={() => open(id)}
-        onClick={handleClick}
-
+        onDoubleClick={() => open(id)}
       >
         <div className="flex justify-between items-center">
           <div className="">
@@ -60,7 +59,7 @@ const Kanban = ({
                 <></>
               )}
               <div className="text-lg">{title}</div>
-              {notifications && (
+              {notification && (
                 <>
                   <div className="mt-2 mx-1 text-gray-400 ml-2">
                     <IoNotificationsOutline size={16} />
@@ -72,7 +71,7 @@ const Kanban = ({
             <div className="text-gray-500">{description}</div>
             {deadline && (
               <div className="text-gray-500 mt-2 text-sm">
-                Notifications {time}
+                Notification {time}
               </div>
             )}
           </div>

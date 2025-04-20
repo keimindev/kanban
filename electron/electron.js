@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Notification} = await import("electron");
+const { app, BrowserWindow} = await import("electron");
 const isDev = await import("electron-is-dev");
 
 
@@ -29,10 +29,6 @@ function createWindow() {
   );
 
 
-  new Notification({
-    title: 'notification title',
-    body: 'hello'
-  }).show()
   
   if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
 

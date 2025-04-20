@@ -8,6 +8,7 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { FaPlus } from "react-icons/fa";
 import dynamic from 'next/dynamic'
+import TimeNotifier from "./components/timeNotification";
  
 const Kanban = dynamic(() => import('./components/kanban'), { ssr: false })
 
@@ -16,7 +17,7 @@ export type KanbanItem = {
   id: string;
   title: string;
   description: string;
-  notifications?: boolean;
+  notification?: boolean;
   time?: string;
   deadline?: string;
   priority?: string;
@@ -73,6 +74,7 @@ export default function Home() {
           <FaPlus size={24} />
         </div>
       </div>
+      <TimeNotifier />
     </>
   );
 }
