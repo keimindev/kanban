@@ -8,7 +8,7 @@ import { useTaskStore } from "../store/taskStore";
 
 function Newkanban() {
   const { close, selectedId } = useModalStore();
-  const { taskList, addTask} = useTaskStore();
+  const { taskList, addTask, modifyTask} = useTaskStore();
 
   const [newTask, setNewTask] = useState<KanbanItem>({
     id: 1,
@@ -46,7 +46,12 @@ function Newkanban() {
   };
 
   const handleSaveNewTask = () => {
-    addTask({ ...newTask, id: taskList.length + 1});
+    if(task){
+      modifyTask(newTask)
+    }else{
+      addTask({ ...newTask, id: taskList.length + 1});
+    }
+    
   };
 
   return (

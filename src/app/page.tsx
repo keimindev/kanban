@@ -46,7 +46,6 @@ export default function Home() {
 
   return (
     <>
-      <div className="text-center">Kanban</div>
       <div className="relative h-screen">
         {isOpen && (
           <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/40">
