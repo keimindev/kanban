@@ -32,10 +32,24 @@ const Kanban = ({
 
   useEffect(() => {
     if (notification && time) {
+      console.log(time, "time");
       useTimeStore.getState().addEntry({ id, title, time, notified: false });
     }
   }, []);
-  
+
+  const formatToAMPM = (time: string) => {
+    if (!time) return "";
+
+    const [hourStr, minute] = time.split(":");
+    let hour = parseInt(hourStr, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+
+    hour = hour % 12;
+    if (hour === 0) hour = 12; // 0시는 12로 바꿔야 함
+
+    return `${hour}:${minute} ${ampm}`;
+  };
+
   return (
     <>
       <div
@@ -64,7 +78,9 @@ const Kanban = ({
                   <div className="mt-2 mx-1 text-gray-400 ml-2">
                     <IoNotificationsOutline size={16} />
                   </div>
-                  <div className="mt-1.5 text-gray-400 text-sm">{time}</div>
+                  <div className="mt-1.5 text-gray-400 text-sm">
+                    {formatToAMPM(time || "")}
+                  </div>
                 </>
               )}
             </div>

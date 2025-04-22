@@ -9,6 +9,7 @@ export interface Task {
   time?: string;
   deadline?: string;
   priority?: string;
+  completed: boolean;
 }
 
 interface TaskStore {
@@ -16,10 +17,13 @@ interface TaskStore {
   addTask: (content: Task) => void;
   changeIdxTask: (content: Task[]) => void;
   modifyTask: (content: Task) => void;
+  completedTasksList: Task[]; 
+  completeTask: (id: number) => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
-  taskList: dummydata,
+  taskList: dummydata.filter((task) => task.completed === false),
+  completedTasksList: dummydata.filter((task) => task.completed === true),
   addTask: (content) =>
     set((state) => {
       const exists = state.taskList.find((e) => e.title === content.title);
@@ -55,5 +59,19 @@ export const useTaskStore = create<TaskStore>((set) => ({
           taskList: [...state.taskList, content],
         };
       }
+    }),
+  completeTask: (id) =>
+    set((state) => {
+      const taskToComplete = state.taskList.find((task) => task.id === id);
+      if (!taskToComplete) return state;
+
+      // taskList에서 제거하고, completedList에 추가
+      return {
+        taskList: state.taskList.filter((task) => task.id !== id),
+        completedList: [
+          ...state.completedTasksList,
+          { ...taskToComplete, completed: true },
+        ],
+      };
     }),
 }));

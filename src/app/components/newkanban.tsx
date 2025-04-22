@@ -8,7 +8,7 @@ import { useTaskStore } from "../store/taskStore";
 
 function Newkanban() {
   const { close, selectedId } = useModalStore();
-  const { taskList, addTask, modifyTask} = useTaskStore();
+  const { taskList, addTask, modifyTask } = useTaskStore();
 
   const [newTask, setNewTask] = useState<KanbanItem>({
     id: 1,
@@ -18,18 +18,18 @@ function Newkanban() {
     time: "00:00",
     deadline: "",
     priority: "default",
+    completed: false,
   });
-  
+
   const task = taskList.find((item) => item.id == selectedId);
 
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() =>{
-    if(task){
-      setNewTask(task)
+  useEffect(() => {
+    if (task) {
+      setNewTask(task);
     }
-
-  },[task])
+  }, [task]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTask((prev) => ({
@@ -46,12 +46,11 @@ function Newkanban() {
   };
 
   const handleSaveNewTask = () => {
-    if(task){
-      modifyTask(newTask)
-    }else{
-      addTask({ ...newTask, id: taskList.length + 1});
+    if (task) {
+      modifyTask(newTask);
+    } else {
+      addTask({ ...newTask, id: taskList.length + 1 });
     }
-    
   };
 
   return (
