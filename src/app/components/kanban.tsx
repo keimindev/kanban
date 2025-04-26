@@ -1,6 +1,9 @@
 "use client";
 
-import { IoFlagSharp, IoNotificationsOutline } from "react-icons/io5";
+import {
+  IoFlagSharp,
+  IoNotificationsOutline,
+} from "react-icons/io5";
 import { useSortable } from "@dnd-kit/sortable";
 import { KanbanItem } from "../page";
 import { useEffect } from "react";
@@ -52,6 +55,7 @@ const Kanban = ({
 
   return (
     <>
+    <div className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white flex flex-row">
       <div
         id="output"
         key={id}
@@ -59,7 +63,7 @@ const Kanban = ({
         {...listeners}
         {...attributes}
         style={style}
-        className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white"
+        className="w-[95%] cursor-pointer"
         onDoubleClick={() => open(id)}
       >
         <div className="flex justify-between items-center">
@@ -91,8 +95,12 @@ const Kanban = ({
               </div>
             )}
           </div>
-          <div className="cursor-pointer">Done</div>
         </div>
+      </div>
+      <div className="z-10">
+        <div className="cursor-pointer" onClick={() => console.log("check")}>✅</div>
+        <div className="cursor-pointer" onClick={() => console.log("fail")}>❌</div>
+      </div>
       </div>
     </>
   );
