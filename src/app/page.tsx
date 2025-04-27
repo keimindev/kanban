@@ -48,7 +48,7 @@ export default function Home() {
   useEffect(() => {
     console.log(completedTasksList, "com");
     setShowCompleted(true);
-  }, []);
+  }, [completedTasksList, taskList]);
 
   return (
     <>

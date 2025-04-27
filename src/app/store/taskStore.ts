@@ -19,6 +19,7 @@ interface TaskStore {
   modifyTask: (content: Task) => void;
   completedTasksList: Task[]; 
   completeTask: (id: number) => void;
+  deleteTask: (id: number) => void;
 }
 
 export const useTaskStore = create<TaskStore>((set) => ({
@@ -65,13 +66,19 @@ export const useTaskStore = create<TaskStore>((set) => ({
       const taskToComplete = state.taskList.find((task) => task.id === id);
       if (!taskToComplete) return state;
 
-      // taskList에서 제거하고, completedList에 추가
       return {
         taskList: state.taskList.filter((task) => task.id !== id),
-        completedList: [
+        completedTasksList: [
           ...state.completedTasksList,
-          { ...taskToComplete, completed: true },
+          { ...taskToComplete, completed: true }, 
         ],
+  
       };
     }),
+    deleteTask: (id) =>
+      set((state) => {
+        return {
+          taskList: state.taskList.filter((task) => task.id !== id),
+        };
+      }),
 }));

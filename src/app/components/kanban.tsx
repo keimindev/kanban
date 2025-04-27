@@ -9,6 +9,7 @@ import { KanbanItem } from "../page";
 import { useEffect } from "react";
 import { useModalStore } from "../store/modalStore";
 import { useTimeStore } from "../store/timeStore";
+import { useTaskStore } from "../store/taskStore";
 
 type KanbanProps = KanbanItem & { dragId: number };
 
@@ -26,6 +27,7 @@ const Kanban = ({
     id: dragId,
   });
   const { open } = useModalStore();
+  const { completeTask, deleteTask } = useTaskStore();
 
   const style = {
     transform: transform
@@ -35,7 +37,6 @@ const Kanban = ({
 
   useEffect(() => {
     if (notification && time) {
-      console.log(time, "time");
       useTimeStore.getState().addEntry({ id, title, time, notified: false });
     }
   }, []);
@@ -98,12 +99,11 @@ const Kanban = ({
         </div>
       </div>
       <div className="z-10">
-        <div className="cursor-pointer" onClick={() => console.log("check")}>✅</div>
-        <div className="cursor-pointer" onClick={() => console.log("fail")}>❌</div>
+        <div className="cursor-pointer" onClick={() => completeTask(id)}>✅</div>
+        <div className="cursor-pointer" onClick={() => deleteTask(id)}>❌</div>
       </div>
       </div>
     </>
   );
-};
-
+}
 export default Kanban;
