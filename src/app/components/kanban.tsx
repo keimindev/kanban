@@ -56,7 +56,7 @@ const Kanban = ({
 
   return (
     <>
-    <div className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white flex flex-row">
+    <div className="border border-gray-100 rounded-lg p-3 m-2 shadow-md bg-white flex flex-row justify-between">
       <div
         id="output"
         key={id}
@@ -64,7 +64,7 @@ const Kanban = ({
         {...listeners}
         {...attributes}
         style={style}
-        className="w-[95%] cursor-pointer"
+        className="w-[99%] cursor-pointer"
         onDoubleClick={() => open(id)}
       >
         <div className="flex justify-between items-center">
@@ -98,9 +98,9 @@ const Kanban = ({
           </div>
         </div>
       </div>
-      <div className="z-10">
-        <div className="cursor-pointer" onClick={() => completeTask(id)}>✅</div>
-        <div className="cursor-pointer" onClick={() => deleteTask(id)}>❌</div>
+      <div className="z-10 w-[230px] h-[100%] flex flex-row justify-center items-center">
+        <button className="mr-2 w-[49%] h-[40px] bg-indigo-100 text-indigo-500 rounded-lg cursor-pointer"  onClick={() => completeTask(id)}>Complete</button>
+        <button className="w-[49%] h-[40px] bg-indigo-100 text-indigo-500 rounded-lg cursor-pointer" onClick={() => deleteTask(id)}>Delete</button>
       </div>
       </div>
     </>

@@ -1,6 +1,15 @@
 import { create } from "zustand";
 import { dummydata } from "../utils/data";
 
+declare global {
+  interface Window {
+    api: {
+      getTasks: () => Promise<Task[]>;
+      addTask: (task: Task) => Promise<void>;
+    };
+  }
+}
+
 export interface Task {
   id: number;
   title: string;
@@ -25,14 +34,19 @@ interface TaskStore {
 export const useTaskStore = create<TaskStore>((set) => ({
   taskList: dummydata.filter((task) => task.completed === false),
   completedTasksList: dummydata.filter((task) => task.completed === true),
-  addTask: (content) =>
-    set((state) => {
-      const exists = state.taskList.find((e) => e.title === content.title);
-      if (exists) return state;
-      return {
-        taskList: [...state.taskList, content],
-      };
-    }),
+  loadTasks: async () => {
+    const tasks = await window.api.getTasks();
+    set({ taskList: tasks });
+  },
+  addTask: async (content) => {
+    const exists = useTaskStore.getState().taskList.find((e) => e.title === content.title);
+    if (exists) return;
+    await window.api.addTask({ ...content });
+    const tasks = await window.api.getTasks();
+    set((state) => ({
+      taskList: [...state.taskList, ...tasks],
+    }));
+  },
   changeIdxTask: (content) =>
     set((state) => {
       if (state.taskList === content) {
